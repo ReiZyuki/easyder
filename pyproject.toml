@@ -1,0 +1,105 @@
+[build-system]
+requires = ["setuptools>=45", "wheel", "setuptools_scm[toml]>=6.2"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "easyder"
+version = "0.2.0"
+description = "EASYDER - CSS-inspired video downloader with automatic cookie fallback, powered by yt-dlp + FFmpeg"
+readme = "README.md"
+requires-python = ">=3.8"
+license = {text = "MIT"}
+authors = [
+    {name = "ReiZyuki", email = "rei@example.com"}
+]
+keywords = [
+    "video",
+    "downloader",
+    "youtube",
+    "instagram",
+    "tiktok",
+    "yt-dlp",
+    "ffmpeg",
+    "css-inspired",
+    "easy"
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Developers",
+    "Intended Audience :: End Users/Desktop",
+    "License :: OSI Approved :: MIT License",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP",
+    "Topic :: Multimedia :: Video",
+    "Topic :: Utilities",
+]
+dependencies = [
+    "yt-dlp>=2023.12.30",
+    "requests>=2.31.0",
+]
+
+[project.optional-dependencies]
+gallery = ["gallery-dl>=1.26.0"]
+dev = [
+    "pytest>=7.0.0",
+    "pytest-cov>=4.0.0",
+    "black>=23.0.0",
+    "flake8>=6.0.0",
+    "mypy>=1.0.0",
+]
+
+[project.urls]
+"Homepage" = "https://github.com/ReiZyuki/easyder"
+"Bug Tracker" = "https://github.com/ReiZyuki/easyder/issues"
+"Documentation" = "https://github.com/ReiZyuki/easyder#readme"
+"Source Code" = "https://github.com/ReiZyuki/easyder"
+
+[tool.setuptools]
+packages = ["easyder"]
+
+[tool.black]
+line-length = 120
+target-version = ["py38", "py39", "py310", "py311", "py312"]
+include = '\.pyi?$'
+extend-exclude = '''
+/(
+  # directories
+  \.eggs
+  | \.git
+  | \.hg
+  | \.mypy_cache
+  | \.tox
+  | \.venv
+  | build
+  | dist
+)/
+'''
+
+[tool.pytest.ini_options]
+minversion = "7.0"
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
+addopts = "-v --cov=easyder --cov-report=html --cov-report=term-missing"
+
+[tool.coverage.run]
+source = ["easyder"]
+omit = [
+    "*/tests/*",
+    "*/test_*.py",
+]
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = false
+ignore_missing_imports = true
