@@ -17,11 +17,11 @@ DEFAULT_DOWNLOAD_DIR = "/storage/emulated/0/Download/ReiDownloader/"
 # Video quality mapping
 QUALITY_MAP = {
     0: "audio",
-    2: "360p",
-    3: "480p",
-    4: "720p",
-    5: "1080p",
-    6: "best"
+    1: "360p",
+    2: "480p",
+    3: "720p",
+    4: "1080p",
+    5: "original"
 }
 
 
@@ -69,7 +69,7 @@ class EasyDer:
                 return cookie_path
         return None
     
-    def _get_ydl_opts(self, quality: int = 4, cookie_file: Optional[str] = None) -> Dict[str, Any]:
+    def _get_ydl_opts(self, quality: int = 3, cookie_file: Optional[str] = None) -> Dict[str, Any]:
         """Get yt-dlp options based on quality and cookies"""
         opts = {
             "quiet": False,
@@ -91,13 +91,13 @@ class EasyDer:
         """Get yt-dlp format string based on quality number"""
         quality_formats = {
             0: "bestaudio/best",  # audio only
-            2: "bestvideo[height<=360]+bestaudio/best",
-            3: "bestvideo[height<=480]+bestaudio/best",
-            4: "bestvideo[height<=720]+bestaudio/best",
-            5: "bestvideo[height<=1080]+bestaudio/best",
-            6: "bestvideo+bestaudio/best"
+            1: "bestvideo[height<=360]+bestaudio/best",  # 360p
+            2: "bestvideo[height<=480]+bestaudio/best",  # 480p
+            3: "bestvideo[height<=720]+bestaudio/best",  # 720p
+            4: "bestvideo[height<=1080]+bestaudio/best",  # 1080p
+            5: "bestvideo+bestaudio/best"  # original/best
         }
-        return quality_formats.get(quality, quality_formats[4])
+        return quality_formats.get(quality, quality_formats[3])
     
     def _extract_metadata(self, url: str, cookie_file: Optional[str] = None) -> Dict[str, Any]:
         """Extract metadata from URL"""
@@ -313,10 +313,18 @@ def rz(selectors: Dict[str, str], url: str, cookies: Optional[List[str]] = None)
         from easyder import rz
         
         result = rz({
-            "video[4]": "video",
+            "video[3]": "video",  # 720p
             "title": "title",
             "creator": "creator"
         }, "https://www.youtube.com/watch?v=...")
+    
+    Quality levels:
+        0 = audio only
+        1 = 360p
+        2 = 480p
+        3 = 720p (default)
+        4 = 1080p
+        5 = original/best
     """
     
     # Check for global Cooki variable
