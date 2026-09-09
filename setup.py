@@ -50,11 +50,6 @@ setup(
             "mypy>=1.0.0",
         ],
     },
-    entry_points={
-        "console_scripts": [
-            "easyder=easyder.cli:main",
-        ],
-    },
     keywords=[
         "video",
         "downloader",
